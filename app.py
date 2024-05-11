@@ -6,12 +6,10 @@ app=Flask(__name__)
 def index():
     return(render_template("index.html"))
 
-
 @app.route("/main",methods=["GET","POST"])
 def main():
     r=request.form.get("q")
     return(render_template("main.html",r=r))
-    ## the r=r one from the back end r and another from front end the html
 
 @app.route("/prediction",methods=["GET","POST"])
 def prediction():
@@ -24,5 +22,3 @@ def dbs_price():
 
 if __name__=="__main__":
     app.run()
-
-## == magic reserved for some only
