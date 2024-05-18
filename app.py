@@ -6,8 +6,8 @@ import os
 flag = 1
 name = ""
 
-palm.configure(api_key="AIzaSyAv9fecdj0fnj1KR6awiYSkaqpZWTSSINI")
-os.environ["REPLICATE_API_TOKEN"] = "r8_1R8QK9KyBP7gBYJPQgo7UjBXz1A44I62W3YTE"
+makersuite_api=os.getenv("MAKERSUITE_API_TOKEN")
+palm.configure(api_key=makersuite_api)
 
 model = {"model" : "models/chat-bison-001"}
 
