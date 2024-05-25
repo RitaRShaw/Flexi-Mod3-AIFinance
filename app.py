@@ -3,6 +3,9 @@ import google.generativeai as palm
 import replicate
 import os
 import requests
+import sqlite3
+import datetime
+from flask import Markup
 
 flag = 1
 name = ""
@@ -17,14 +20,34 @@ app = Flask(__name__)
 def index():
     return(render_template("index.html"))
 
+#@app.route("/main",methods=["GET","POST"])
+#def main():
+#    global flag, name
+#    print("flag", flag)
+#    if flag == 1:
+#        name = request.form.get("q")
+#        flag = 0
+#    return(render_template("main.html",r=name))
+
 @app.route("/main",methods=["GET","POST"])
 def main():
     global flag, name
     print("flag", flag)
     if flag == 1:
         name = request.form.get("q")
+
+        current_time=datetime.datetime.now()
+        conn=sqlite3.connect('log.db')
+        c=conn.cursor()
+        c.execute("insert into user(name,time) values(?,?)",(name,current_time))
+        conn.commit()
+        c.close()
+        conn.close()
         flag = 0
     return(render_template("main.html",r=name))
+
+
+
 
 @app.route("/prediction",methods=["GET","POST"])
 def prediction():
