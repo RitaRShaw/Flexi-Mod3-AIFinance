@@ -100,7 +100,7 @@ def delete():
         conn.commit()
         c.close()
         conn.close()
-    return(render_template("delete.html"))
+        return(render_template("delete.html"))
     
 
 @app.route("/end",methods=["GET","POST"])
