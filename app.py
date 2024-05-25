@@ -46,9 +46,6 @@ def main():
         flag = 0
     return(render_template("main.html",r=name))
 
-
-
-
 @app.route("/prediction",methods=["GET","POST"])
 def prediction():
     return(render_template("prediction.html"))
@@ -79,6 +76,32 @@ def image_result():
       input = {"prompt":q}
     )
     return(render_template("image_result.html",r=r[0]))
+
+@app.route("/log",methods=["GET","POST"])
+def log():
+    
+    conn=sqlite3.connect('log.db')
+    c=conn.cursor()
+    c.execute("select * from user")
+    r=""
+    for row in c:
+      r =r+str(row)+"<br>"
+    print(r)
+    r=Markup(r)
+    c.close()
+    conn.close()
+    return(render_template("log.html",r=r))
+
+@app.route("/delete",methods=["GET","POST"])
+def delete():
+        conn=sqlite3.connect('log.db')
+        c=conn.cursor()
+        c.execute("delete from user")
+        conn.commit()
+        c.close()
+        conn.close()
+    return(render_template("delete.html"))
+    
 
 @app.route("/end",methods=["GET","POST"])
 def end():
